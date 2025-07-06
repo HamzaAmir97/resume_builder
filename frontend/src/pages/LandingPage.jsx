@@ -32,7 +32,7 @@ const LandingPage = () => {
       <div className="container mx-auto px-4 py-6">
 
         {/* Header */}
-        <header className="flex justify-between items-center mb-16">
+        <header className="flex justify-between items-center mb-16 px-8">
           <div className="text-xl font-bold">Resume Builder</div>
 
          {user ? <ProfileInfoCard /> : <button 
@@ -43,8 +43,11 @@ const LandingPage = () => {
            </button> }
         </header>
 
+
+
+
         {/* Hero Content */}
-        <div className="flex flex-col md:flex-row items-center">
+        <div className="flex flex-col md:flex-row items-center px-8">
           <div className="w-full md:w-1/2 pr-4 mb-8 md:mb-0">
             <h1 className="text-5xl font-bold mb-6 leading-tight">
               Build Your{" "}
@@ -74,7 +77,7 @@ const LandingPage = () => {
 
 
 
-        <section className="mt-5">
+        <section className="mt-5 px-8">
           <h2 className="text-2xl font-bold text-center mb-12">
             Features That Make You Shine
           </h2>
