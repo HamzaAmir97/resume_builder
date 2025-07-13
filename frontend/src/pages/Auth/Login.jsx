@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Input from '../../components/inputs/Input';
+import { validateEmail } from '../../utils/helper';
 
 const Login = ({ setCurrentPage }) => {
   const [email, setEmail] = useState("");
@@ -9,8 +10,32 @@ const Login = ({ setCurrentPage }) => {
 
   const navigate = useNavigate();
 
-  // Handle Login Form Submit
-  const handleLogin = async (e) => { };
+
+
+// Handle Login Form Submit
+const handleLogin = async (e) => {
+  e.preventDefault();
+
+  if (!validateEmail(email)) {
+      setError("Please enter a valid email address.");
+      return;
+  }
+
+  if (!password) {
+      setError("Please enter the password");
+      return;
+  }
+
+  setError("");
+
+  //Login API Call
+  try {
+  } catch (error) {
+  }
+};
+
+
+
   return (
     <div className="w-[90vw] md:w-[33vw] p-7 flex flex-col justify-center">
       <h3 className="text-lg font-semibold text-black">Welcome Back</h3>
@@ -34,7 +59,7 @@ const Login = ({ setCurrentPage }) => {
           value={email}
           onChange={({ target }) => setEmail(target.value)}
           label="password"
-          placeholder="password"
+          placeholder="min 8 characters"
           type="password"
         />
 

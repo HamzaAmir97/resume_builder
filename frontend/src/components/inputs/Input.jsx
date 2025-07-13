@@ -21,9 +21,7 @@ const Input = ({ value, onChange, label, placeholder, type }) => {
                 value={value}
                 onChange={(e) => onChange(e)}
             />
-        </div>
-        
-        {type === "password" && (
+             {type === "password" && (
             <>
                 {showPassword ? (
                     <FaRegEye
@@ -41,6 +39,9 @@ const Input = ({ value, onChange, label, placeholder, type }) => {
             </>
         )}
 
+        </div>
+        
+       
     </div>
 };
 
