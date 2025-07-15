@@ -1,8 +1,12 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Input from '../../components/inputs/Input';
 import { validateEmail } from '../../utils/helper';
 import ProfilePhotoSelector from '../../components/inputs/ProfilePhotoSelector';
+import { API_PATHS } from '../../utils/apiPaths';
+import axiosInstance from '../../utils/axiosInstance';
+import { UserContext } from '../../context/userContext';
+import uploadImage from '../../utils/uploadImage';
 
 
 const SignUp = ({ setCurrentPage }) => {
@@ -14,6 +18,10 @@ const SignUp = ({ setCurrentPage }) => {
   const [error, setError] = useState(null);
 
   const navigate = useNavigate();
+
+  const { updateUser } = useContext(UserContext);
+
+
 
   // Handle SignUp Form Submit
   const handleSignUp = async (e) => {
@@ -40,10 +48,39 @@ const SignUp = ({ setCurrentPage }) => {
 
     setError("");
 
+
     //SignUp API Call
     try {
-    } catch (error) { }
+
+      // Upload image if present
+      if (profilePic) {
+        const imgUploadRes = await uploadImage(profilePic);
+        profileImageUrl = imgUploadRes.imageUrl || "";
+      }
+
+      const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, {
+        name: fullName,
+        email,
+        password,
+        profileImageUrl,
+      });
+
+      const { token } = response.data;
+
+      if (token) {
+        localStorage.setItem("token", token);
+        updateUser(response.data);
+        navigate("/dashb");
+      }
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        setError(error.response.data.message);
+      } else {
+        setError("Something went wrong. Please try again.");
+      }
+    }
   };
+
 
   return (
     <div className="w-[90vw] md:w-[33vw] p-7 flex flex-col justify-center">
@@ -53,7 +90,7 @@ const SignUp = ({ setCurrentPage }) => {
       </p>
 
       <form onSubmit={handleSignUp}>
-      <ProfilePhotoSelector image={profilePic} setImage={setProfilePic} />
+        <ProfilePhotoSelector image={profilePic} setImage={setProfilePic} />
         <div className="grid grid-cols-1 md:grid-cols-1 gap-2">
           <Input
             value={fullName}
