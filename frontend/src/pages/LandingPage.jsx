@@ -1,13 +1,15 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import HERO_IMG from '../assets/hero-img.png'
 import { useNavigate } from 'react-router-dom';
 import SignUp from './Auth/SignUp';
 import Login from './Auth/Login';
 import Modal from '../components/Modal';
+import { UserContext } from '../context/userContext';
+import ProfileInfoCard from '../components/Cards/ProfileInfoCard';
 
 const LandingPage = () => {
   const navigate = useNavigate();
-
+  const { user } = useContext(UserContext);
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [currentPage, setCurrentPage] = useState("login");
 
@@ -19,12 +21,13 @@ const LandingPage = () => {
         {/* Header */}
         <header className="flex justify-between items-center mb-16">
           <div className="text-xl font-bold">Resume Builder</div>
-          <button
+
+         {user ? <ProfileInfoCard /> : <button 
             className="bg-purple-100 text-sm font-semibold text-black px-7 py-2.5 hover:bg-black hover:text-amber-50 rounded-lg"
             onClick={() => setOpenAuthModal(true)}
           >
             Login / Sign Up
-          </button>
+           </button> }
         </header>
 
         {/* Hero Content */}

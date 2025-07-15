@@ -7,7 +7,6 @@ import SignUp from "./pages/Auth/SignUp";
 import Dashboard from "./pages/Home/Dashboard";
 import EditResume from "./pages/ResumeUpdate/EditResume";
 import UserProvider from "./context/userContext";
-
 const App = () => {
   return (
     <UserProvider>
