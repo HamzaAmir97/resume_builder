@@ -1,15 +1,15 @@
-import React, { useContext } from 'react'
+import React, { useContext } from 'react';
 import { UserContext } from '../../context/userContext';
 import { useNavigate } from 'react-router-dom';
 
 const ProfileInfoCard = () => {
     const { user, clearUser } = useContext(UserContext);
-    const Navigate = useNavigate()
+    const navigate = useNavigate();
 
-    const handelLogout = () => {
+    const handleLogout = () => {
         localStorage.clear();
         clearUser();
-        Navigate('/')
+        navigate('/');
     };
 
     return (
@@ -26,7 +26,7 @@ const ProfileInfoCard = () => {
                     </div>
                     <button
                         className="text-purple-500 text-sm font-semibold cursor-pointer hover:underline"
-                        onClick={handelLogout}
+                        onClick={handleLogout}
                     >
                         Logout
                     </button>
@@ -34,6 +34,6 @@ const ProfileInfoCard = () => {
             </div>
         )
     );
-    };
-    
-    export default ProfileInfoCard;
+};
+
+export default ProfileInfoCard;
