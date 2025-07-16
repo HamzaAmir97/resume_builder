@@ -32,7 +32,7 @@ const Title = ({ text, color }) => {
 };
 
 
-const TemplateOne = ({ resumeData, colorPalette, containerWidth }) => {
+const TemplateThree = ({ resumeData, colorPalette, containerWidth }) => {
     const themeColors = colorPalette?.length > 0 ? colorPalette : DEFAULT_THEME;
 
     const resumeRef = useRef(null);
@@ -285,6 +285,6 @@ const TemplateOne = ({ resumeData, colorPalette, containerWidth }) => {
     );
 };
 
-export default TemplateOne;
+export default TemplateThree;
 
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import {
   LuArrowLeft,
   LuCircleAlert,
@@ -22,6 +22,11 @@ import ProjectsDetailFrom from './Forms/ProjectsDetailFrom';
 import CertificationInfoFrom from './Forms/CertificationInfoFrom';
 import AdditionalInfoFrom from './Forms/AdditionalInfoFrom';
 import RenderResume from '../../components/ResumeTemplates/RenderResume';
+import { captureElementAsImage, dataURLtoFile, fixTailwindColors } from '../../utils/helper';
+import ThemeSelector from './Forms/ThemeSelector';
+import Modal from '../../components/Modal';
+import { API_PATHS } from '../../utils/apiPaths';
+import axiosInstance from '../../utils/axiosInstance';
 
 
 
@@ -38,7 +43,7 @@ const EditResume = () => {
 
   const [openPreviewModal, setOpenPreviewModal] = useState(false);
 
-  const [currentPage, setCurrentPage] = useState("profile-info");
+  const [currentPage, setCurrentPage] = useState("education-info");
   const [progress, setProgress] = useState(0);
   const [resumeData, setResumeData] = useState({
     title: "",
@@ -122,6 +127,8 @@ const EditResume = () => {
 
   // Validate Inputs
   const validateAndNext = (e) => {
+
+
     const errors = [];
 
     switch (currentPage) {
@@ -226,12 +233,12 @@ const EditResume = () => {
     }
 
     if (errors.length > 0) {
-      setErrMsg(errors.join(", "));
+      setErrorMsg(errors.join(", "));
       return;
     }
 
     // Move to next step
-    setErrMsg("");
+    setErrorMsg("");
     goToNextStep();
 
 
@@ -283,7 +290,7 @@ const EditResume = () => {
     ];
 
 
-    if (currentPage === "profile-info") navigate("dashboard");
+    if (currentPage === "profile-info") navigate("/dashboard");
 
     const currentIndex = pages.indexOf(currentPage);
     if (currentIndex > 0) {
@@ -466,7 +473,7 @@ const EditResume = () => {
   // Fetch resume info by ID
   const fetchResumeDetailsById = async () => {
     try {
-      const response = await axiosInstance.get(
+      const response = await axiosInstance .get(
         API_PATHS.RESUME.GET_BY_ID(resumeId)
       );
 
@@ -498,9 +505,77 @@ const EditResume = () => {
 
 
   // upload thumbnail and resume profile img
-  const uploadResumeImages = async () => { };
+  const uploadResumeImages = async () => {
+    try {
+      setIsLoading(true);
 
-  const updateResumeDetails = async (thumbnailLink, profilePreviewUrl) => { };
+      fixTailwindColors(resumeRef.current);
+      const imageDataUrl = await captureElementAsImage(resumeRef.current);
+
+      // Convert base64 to File
+      const thumbnailFile = dataURLtoFile(
+        imageDataUrl,
+        `resume-${resumeId}.png`
+      );
+
+      const profileImageFile = resumeData?.profileInfo?.profileImg || null;
+
+      const formData = new FormData();
+      if (profileImageFile) formData.append("profileImage", profileImageFile);
+      if (thumbnailFile) formData.append("thumbnail", thumbnailFile);
+
+      const uploadResponse = await axiosInstance.put(
+        API_PATHS.RESUME.UPLOAD_IMAGES(resumeId),
+        formData,
+        { headers: { "Content-Type": "multipart/form-data" } }
+      );
+
+      const { thumbnailLink, profilePreviewUrl } = uploadResponse.data;
+
+      console.log("RESUME_DATA___", resumeData);
+
+      // Call the second API to update other resume data
+      await updateResumeDetails(thumbnailLink, profilePreviewUrl);
+
+      toast.success("Resume Updated Successfully!");
+      Navigate("/dashboard");
+    } catch (error) {
+      console.error("Error uploading images:", error);
+      toast.error("Failed to upload images");
+    } finally {
+      setIsLoading(false);
+    }
+
+  };
+
+
+
+
+
+  const updateResumeDetails = async (thumbnailLink, profilePreviewUrl) => {
+    try {
+      setIsLoading(true);
+
+      const response = await axiosInstance.put(
+        API_PATHS.RESUME.UPDATE(resumeId),
+        {
+          ...resumeData,
+          thumbnailLink: thumbnailLink || "",
+          profileInfo: {
+            ...resumeData.profileInfo,
+            profilePreviewUrl: profilePreviewUrl || "",
+          },
+        }
+      );
+    } catch (err) {
+      console.error("Error capturing image:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+
+
 
   // Delete Resume
   const handleDeleteResume = async () => { };
@@ -508,16 +583,16 @@ const EditResume = () => {
   // download resume
   const reactToPrintFn = useReactToPrint({ contentRef: resumeDownloadRef });
 
- // Function to update baseWidth based on the resume container size
-const updateBaseWidth = () => {
-  if (resumeRef.current) {
-    setBaseWidth(resumeRef.current.offsetWidth);
-  }
-};
+  // Function to update baseWidth based on the resume container size
+  const updateBaseWidth = () => {
+    if (resumeRef.current) {
+      setBaseWidth(resumeRef.current.offsetWidth);
+    }
+  };
 
 
 
-
+ 
   useEffect(() => {
     updateBaseWidth();
     window.addEventListener("resize", updateBaseWidth);
@@ -536,7 +611,7 @@ const updateBaseWidth = () => {
 
     <DashboardLayout>
       <div className="container mx-auto">
-        <div className="flex items-center justify-between gap-5 bg-white rounded-lg">
+        <div className="flex items-center justify-between gap-5 bg-white rounded-lg border border-purple-100 py-3 px-4 mb-4 ">
           <TitleInput
             title={resumeData.title}
             setTitle={(value) =>
@@ -577,7 +652,7 @@ const updateBaseWidth = () => {
 
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <div className="bg-white rounded-lg border border-purple-100 overflow-hidden">
+          <div className="bg-white rounded-lg bor   ">
             <StepProgress progress={progress} />
 
             {renderForm()}
@@ -590,8 +665,11 @@ const updateBaseWidth = () => {
                   <LuCircleAlert className="text-md" /> {errorMsg}
                 </div>
               )}
-            </div>
+
+              
+          
             <div className="flex items-end justify-end gap-3 mt-3 mb-5">
+
               <button
                 className="btn-small-light"
                 onClick={goBack}
@@ -600,14 +678,16 @@ const updateBaseWidth = () => {
                 <LuArrowLeft className="text-[16px]" />
                 Back
               </button>
+
               <button
-                className="btn-small-"
+                className="btn-small-light"
                 onClick={uploadResumeImages}
                 disabled={isLoading}
               >
-                <LuSave className="" />
+                <LuSave className="text-[16px]" />
                 {isLoading ? "Updating..." : "Save & Exit"}
               </button>
+
 
               <button
                 className="btn-small"
@@ -626,8 +706,13 @@ const updateBaseWidth = () => {
                   <LuArrowLeft className="text-[16px] rotate-180" />
                 )}
               </button>
+
             </div>
           </div>
+          </div>
+
+
+
 
           <div ref={resumeRef} className="h-[100vh]">
 
@@ -643,6 +728,27 @@ const updateBaseWidth = () => {
         </div>
       </div>
 
+
+
+      <Modal
+        isOpen={openThemeSelector}
+        onClose={() => setOpenThemeSelector(false)}
+        title="Change Theme"
+      >
+        <div className="w-[90vw] h-[80vh]">
+          <ThemeSelector
+            selectedTheme={resumeData?.template}
+            setSelectedTheme={(value) =>
+              setResumeData((prevState) => ({
+                ...prevState,
+                template: value || prevState.template,
+              }))
+            }
+            resumeData={null}
+            onClose={() => setOpenThemeSelector(false)}
+          />
+        </div>
+      </Modal>
     </DashboardLayout>
 
 
