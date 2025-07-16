@@ -577,9 +577,19 @@ const EditResume = () => {
 
 
 
-  // Delete Resume
-  const handleDeleteResume = async () => { };
-
+ // Delete Resume
+const handleDeleteResume = async () => {
+  try {
+    setIsLoading(true);
+    const response = await axiosInstance.delete(API_PATHS.RESUME.DELETE(resumeId));
+    toast.success('Resume Deleted Successfully');
+    navigate('/dashboard');
+  } catch (err) {
+    console.error("Error capturing image:", err);
+  } finally {
+    setIsLoading(false);
+  }
+};
   // download resume
   const reactToPrintFn = useReactToPrint({ contentRef: resumeDownloadRef });
 
@@ -600,7 +610,6 @@ const EditResume = () => {
     if (resumeId) {
       fetchResumeDetailsById();
     }
-
     return () => {
       window.removeEventListener("resize", updateBaseWidth);
     };
@@ -611,7 +620,7 @@ const EditResume = () => {
 
     <DashboardLayout>
       <div className="container mx-auto">
-        <div className="flex items-center justify-between gap-5 bg-white rounded-lg border border-purple-100 py-3 px-4 mb-4 ">
+        <div className="flex items-center justify-between gap-5 bg-white rounded-lg border border-purple-100 py-3 px-4 m-2 ">
           <TitleInput
             title={resumeData.title}
             setTitle={(value) =>
@@ -651,8 +660,9 @@ const EditResume = () => {
 
 
 
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <div className="bg-white rounded-lg bor   ">
+          <div className="bg-white rounded-lg border border-purple-100 overflow-hidden    ">
             <StepProgress progress={progress} />
 
             {renderForm()}
@@ -729,7 +739,7 @@ const EditResume = () => {
       </div>
 
 
-
+    {/* theme selector */}
       <Modal
         isOpen={openThemeSelector}
         onClose={() => setOpenThemeSelector(false)}
@@ -749,6 +759,27 @@ const EditResume = () => {
           />
         </div>
       </Modal>
+
+
+     {/* download selector */}
+
+      <Modal
+  isOpen={openPreviewModal}
+  onClose={() => setOpenPreviewModal(false)}
+  title={resumeData.title}
+  showActionButton
+  actionBtnText="Download"
+  actionBtnIcon={<LuDownload className="text-[16px]" />}
+  onActionClick={() => reactToPrintFn()}
+>
+  <div ref={resumeDownloadRef} className="w-[98vw] h-[90vh]">
+    <RenderResume
+      templateId={resumeData?.template?.theme || ""}
+      resumeData={resumeData}
+      colorPalette={resumeData?.template?.colorPalette || []}
+    />
+  </div>
+</Modal>
     </DashboardLayout>
 
 

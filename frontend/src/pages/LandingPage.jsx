@@ -25,12 +25,23 @@ const LandingPage = () => {
 
 
   return (
-    <div className='w-full min-h-full bg-white'>
+    <div className='w-full min-h-full bg-white mx-5'>
       <div className="container mx-auto px-4 py-6">
 
         {/* Header */}
         <header className="flex justify-between items-center mb-16">
-          <div className="text-xl font-bold">Resume Builder</div>
+          <div className="text-xl font-bold">
+             
+                 <img
+                  src='./src/assets/logo.png'
+                  className='w-30'
+                 
+                 >
+                 
+                 
+                 </img>
+                
+          </div>
 
          {user ? <ProfileInfoCard /> : <button 
             className="bg-purple-100 text-sm font-semibold text-black px-7 py-2.5 hover:bg-black hover:text-amber-50 rounded-lg"

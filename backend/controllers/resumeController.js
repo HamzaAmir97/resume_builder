@@ -7,6 +7,7 @@ const Resume = require("../models/Resume");
 // @access  Private
 const createResume = async (req, res) => {
     try {
+        console.log("User ID in request:", req.user._id);
         const { title } = req.body;
 
 
