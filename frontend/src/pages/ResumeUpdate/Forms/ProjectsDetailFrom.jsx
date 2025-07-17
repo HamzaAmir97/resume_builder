@@ -27,7 +27,7 @@ const ProjectsDetailFrom = ({
                 type="text"
                 value={project.title || ""}
                 onChange={({ target }) =>
-                  updateArrayItem(index, "title", target.value)
+                  updateArrayItem({index,key: "title",value: target.value})
                 }
               />
 
@@ -35,17 +35,17 @@ const ProjectsDetailFrom = ({
               </div>
 
 
-              <div class="col-span-2">
-  <label class="text-xs font-medium text-slate-600">
+              <div className="col-span-2">
+  <label className="text-xs font-medium text-slate-600">
     Description
   </label>
   <textarea
     placeholder="Short description about the project"
-    class="form-input w-full mt-1"
+    className="form-input w-full mt-1"
     rows={3}
     value={project.description || ""}
     onChange={({ target }) =>
-      updateArrayItem(index, "description", target.value)
+      updateArrayItem({index,key: "description",value: target.value})
     }
   />
 </div>
@@ -59,7 +59,7 @@ const ProjectsDetailFrom = ({
   type="url"
   value={project.github || ""}
   onChange={({ target }) =>
-    updateArrayItem(index, "github", target.value)
+    updateArrayItem({index,key: "github", value: target.value})
   }
 />
 
@@ -69,7 +69,7 @@ const ProjectsDetailFrom = ({
   type="url"
   value={project.liveDemo || ""}
   onChange={({ target }) =>
-    updateArrayItem(index, "liveDemo", target.value)
+    updateArrayItem({index,key: "liveDemo",value: target.value})
   }
 />
 </div>

@@ -3,7 +3,7 @@ import { LuPlus, LuTrash2 } from "react-icons/lu";
 import Input from "../../../components/Inputs/Input";
 
 const CertificationInfoFrom = ({
-  certifications,
+  certifications = [],
   updateArrayItem,
   addArrayItem,
   removeArrayItem,
@@ -26,7 +26,7 @@ const CertificationInfoFrom = ({
               type="text"
               value={cert.title || ""}
               onChange={({ target }) =>
-                updateArrayItem(index, "title", target.value)
+                updateArrayItem({index,key: "title",value: target.value})
               }
             />
 
@@ -38,7 +38,7 @@ const CertificationInfoFrom = ({
   type="text"
   value={cert.issuer || ""}
   onChange={({ target }) =>
-    updateArrayItem(index, "issuer", target.value)
+    updateArrayItem({index,key: "issuer",value: target.value})
   }
 />
 
@@ -48,7 +48,7 @@ const CertificationInfoFrom = ({
   type="text"
   value={cert.year || ""}
   onChange={({ target }) =>
-    updateArrayItem(index, "year", target.value)
+    updateArrayItem({index,key: "year",value: target.value})
   }
 />
 </div>
@@ -75,8 +75,8 @@ className="absolute top-3 right-3 text-sm
 <button
   type="button"
   className="self-start flex items-center gap-2 px-4 py-2 rounded bg-purple-100 text-purple-800 text-sm font-medium hover:bg-purple-200 cursor-pointer"
-  onClick={() =>
-    addArrayItem({
+ onClick={() =>
+    addArrayItem("certifications", {
       title: "",
       issuer: "",
       year: "",

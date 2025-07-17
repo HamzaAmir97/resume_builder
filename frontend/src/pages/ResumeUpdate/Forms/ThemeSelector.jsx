@@ -75,7 +75,7 @@ const ThemeSelector = ({
 
       <div className="grid grid-cols-12 gap-5">
         <div className="col-span-12 md:col-span-5 bg-white ">
-          <div className="grid grid-col-2 gap-5 max-h-[80vh] overflow-scroll custom-scrollbar md:pr-5"></div>
+          <div className="grid grid-cols-2 gap-5 max-h-[80vh] overflow-scroll custom-scrollbar md:pr-5"></div>
           {tabValue === "Templates" &&
             resumeTemplates.map((template, index) => (
               <TemplateCard

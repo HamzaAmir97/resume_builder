@@ -9,6 +9,7 @@ const DashboardLayout = ({ activeMenu, children }) => {
     return (
         <div>
             <Navbar activeMenu={activeMenu} />
+      
 
             {user && <div className="container mx-auto pt-4 pb-4">{children}</div>}
         </div>

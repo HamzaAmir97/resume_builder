@@ -382,19 +382,22 @@ const EditResume = () => {
         );
 
 
-      case "certifications":
-        return (
-          <CertificationInfoFrom
-            projectInfo={resumeData?.certifications}
-            updateArrayItem={({ index, key, value }) => {
-              updateArrayItem("certifications", index, key, value);
-            }}
-            addArrayItem={(newItem) => addArrayItem("certifications", newItem)}
-            removeArrayItem={(index) =>
-              removeArrayItem("certifications", index)
-            }
-          />
-        );
+        case "certifications":
+          return (
+            <CertificationInfoFrom
+              certifications={resumeData?.certifications} // ✅ التصحيح هنا
+              updateArrayItem={({ index, key, value }) => {
+                updateArrayItem("certifications", index, key, value);
+              }}
+              addArrayItem={(newItem) =>
+                addArrayItem("certifications", newItem)
+              }
+              removeArrayItem={(index) =>
+                removeArrayItem("certifications", index)
+              }
+            />
+          );
+        
 
       case "additionalInfo":
         return (
@@ -538,7 +541,7 @@ const EditResume = () => {
       await updateResumeDetails(thumbnailLink, profilePreviewUrl);
 
       toast.success("Resume Updated Successfully!");
-      Navigate("/dashboard");
+      navigate("/dashboard");
     } catch (error) {
       console.error("Error uploading images:", error);
       toast.error("Failed to upload images");
