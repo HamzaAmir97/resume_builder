@@ -20,6 +20,7 @@
     "react-icons": "^5.5.0",
     "react-router-dom": "^7.6.3",
     "react-to-print": "^3.1.1",
+    "resume-builder": "file:..",
     "tailwindcss": "^4.1.11"
   },
   "devDependencies": {
