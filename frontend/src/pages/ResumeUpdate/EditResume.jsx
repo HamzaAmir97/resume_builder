@@ -63,15 +63,6 @@ const EditResume = () => {
       email: "",
       phone: "",
       location: "",
-    },
-    template: {
-      theme: "",
-      colorPalette: "",
-    },
-    contactInfo: {
-      email: "",
-      phone: "",
-      location: "",
       linkedin: "",
       github: "",
       website: "",
@@ -122,6 +113,7 @@ const EditResume = () => {
     ],
     interests: [""],
   });
+  
   const [errorMsg, setErrorMsg] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
