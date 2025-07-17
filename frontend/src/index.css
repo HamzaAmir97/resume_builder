@@ -42,7 +42,8 @@
       background-position: 100% 50%;
     }
   }
-
+  
+  
   .animate-text-shine {
     animation: text-shine 3s ease-in-out infinite alternate;
   }

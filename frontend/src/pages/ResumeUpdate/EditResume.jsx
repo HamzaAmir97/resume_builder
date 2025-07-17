@@ -382,22 +382,22 @@ const EditResume = () => {
         );
 
 
-        case "certifications":
-          return (
-            <CertificationInfoFrom
-              certifications={resumeData?.certifications} // ✅ التصحيح هنا
-              updateArrayItem={({ index, key, value }) => {
-                updateArrayItem("certifications", index, key, value);
-              }}
-              addArrayItem={(newItem) =>
-                addArrayItem("certifications", newItem)
-              }
-              removeArrayItem={(index) =>
-                removeArrayItem("certifications", index)
-              }
-            />
-          );
-        
+      case "certifications":
+        return (
+          <CertificationInfoFrom
+            certifications={resumeData?.certifications} // ✅ التصحيح هنا
+            updateArrayItem={({ index, key, value }) => {
+              updateArrayItem("certifications", index, key, value);
+            }}
+            addArrayItem={(newItem) =>
+              addArrayItem("certifications", newItem)
+            }
+            removeArrayItem={(index) =>
+              removeArrayItem("certifications", index)
+            }
+          />
+        );
+
 
       case "additionalInfo":
         return (
@@ -476,7 +476,7 @@ const EditResume = () => {
   // Fetch resume info by ID
   const fetchResumeDetailsById = async () => {
     try {
-      const response = await axiosInstance .get(
+      const response = await axiosInstance.get(
         API_PATHS.RESUME.GET_BY_ID(resumeId)
       );
 
@@ -581,7 +581,18 @@ const EditResume = () => {
 
 
   // Delete Resume
-  const handleDeleteResume = async () => { };
+const handleDeleteResume = async () => {
+  try {
+    setIsLoading(true);
+    const response = await axiosInstance.delete(API_PATHS.RESUME.DELETE(resumeId));
+    toast.success('Resume Deleted Successfully');
+    navigate('/dashboard');
+  } catch (err) {
+    console.error("Error capturing image:", err);
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   // download resume
   const reactToPrintFn = useReactToPrint({ contentRef: resumeDownloadRef });
@@ -595,7 +606,7 @@ const EditResume = () => {
 
 
 
- 
+
   useEffect(() => {
     updateBaseWidth();
     window.addEventListener("resize", updateBaseWidth);
@@ -669,49 +680,49 @@ const EditResume = () => {
                 </div>
               )}
 
-              
-          
-            <div className="flex items-end justify-end gap-3 mt-3 mb-5">
-
-              <button
-                className="btn-small-light"
-                onClick={goBack}
-                disabled={isLoading}
-              >
-                <LuArrowLeft className="text-[16px]" />
-                Back
-              </button>
-
-              <button
-                className="btn-small-light"
-                onClick={uploadResumeImages}
-                disabled={isLoading}
-              >
-                <LuSave className="text-[16px]" />
-                {isLoading ? "Updating..." : "Save & Exit"}
-              </button>
 
 
-              <button
-                className="btn-small"
-                onClick={validateAndNext}
-                disabled={isLoading}
-              >
-                {currentPage === "additionalInfo" && (
-                  <LuDownload className="text-[16px]" />
-                )}
+              <div className="flex items-end justify-end gap-3 mt-3 mb-5">
 
-                {currentPage === "additionalInfo"
-                  ? "Preview & Download"
-                  : "Next"}
+                <button
+                  className="btn-small-light"
+                  onClick={goBack}
+                  disabled={isLoading}
+                >
+                  <LuArrowLeft className="text-[16px]" />
+                  Back
+                </button>
 
-                {currentPage !== "additionalInfo" && (
-                  <LuArrowLeft className="text-[16px] rotate-180" />
-                )}
-              </button>
+                <button
+                  className="btn-small-light"
+                  onClick={uploadResumeImages}
+                  disabled={isLoading}
+                >
+                  <LuSave className="text-[16px]" />
+                  {isLoading ? "Updating..." : "Save & Exit"}
+                </button>
 
+
+                <button
+                  className="btn-small"
+                  onClick={validateAndNext}
+                  disabled={isLoading}
+                >
+                  {currentPage === "additionalInfo" && (
+                    <LuDownload className="text-[16px]" />
+                  )}
+
+                  {currentPage === "additionalInfo"
+                    ? "Preview & Download"
+                    : "Next"}
+
+                  {currentPage !== "additionalInfo" && (
+                    <LuArrowLeft className="text-[16px] rotate-180" />
+                  )}
+                </button>
+
+              </div>
             </div>
-          </div>
           </div>
 
 
@@ -749,6 +760,25 @@ const EditResume = () => {
             }
             resumeData={null}
             onClose={() => setOpenThemeSelector(false)}
+          />
+        </div>
+      </Modal>
+
+
+      <Modal
+        isOpen={openPreviewModal}
+        onClose={() => setOpenPreviewModal(false)}
+        title={resumeData.title}
+        showActionButton
+        actionBtnText="Download"
+        actionBtnIcon={<LuDownload className="text-[16px]" />}
+        onActionClick={() => reactToPrintFn()}
+      >
+        <div ref={resumeDownloadRef} className="w-[98vw] h-[90vh]">
+          <RenderResume
+            templateId={resumeData?.template?.theme || ""}
+            resumeData={resumeData}
+            colorPalette={resumeData?.template?.colorPalette || []}
           />
         </div>
       </Modal>

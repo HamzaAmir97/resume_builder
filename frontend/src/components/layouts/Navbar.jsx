@@ -10,6 +10,11 @@ const Navbar = () => {
                     Resume Builder
                 </h2>
             </Link>
+            <Link to='/'>
+                <h2 className="text-lg md:text-xl font-bold text-black leading-5 hover:underline ">
+                  Home
+                </h2>
+            </Link>
 
             <ProfileInfoCard />
         </div>
