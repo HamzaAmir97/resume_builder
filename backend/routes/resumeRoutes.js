@@ -1,21 +1,21 @@
-const express = require("express");
-const {
-    createResume,
-    getUserResumes,
-    getResumeById,
-    updateResume,
-    deleteResume,
-} = require("../controllers/resumeController");
-const { protect } = require("../middlewares/authMiddleware");
-const { uploadResumeImages } = require("../controllers/uploadImages");
+import express from "express";
+import {
+  createResume,
+  getUserResumes,
+  getResumeById,
+  updateResume,
+  deleteResume,
+} from "../controllers/resumeController.js";
+import { protect } from "../middlewares/authMiddleware.js";
+import { uploadResumeImages } from "../controllers/uploadImages.js";
 
 const router = express.Router();
 
-router.post("/", protect, createResume);        // Create Resume
-router.get("/", protect, getUserResumes);       // Get Resume
-router.get("/:id", protect, getResumeById);     // Get Resume By ID
-router.put("/:id", protect, updateResume);      // Update Resume
+router.post("/", protect, createResume);
+router.get("/", protect, getUserResumes);
+router.get("/:id", protect, getResumeById);
+router.put("/:id", protect, updateResume);
 router.put("/:id/upload-images", protect, uploadResumeImages);
-router.delete("/:id", protect, deleteResume);   // Delete Resume
+router.delete("/:id", protect, deleteResume);
 
-module.exports = router;
+export default router;

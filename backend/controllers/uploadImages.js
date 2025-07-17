@@ -1,7 +1,7 @@
-const fs = require("fs");
-const path = require("path");
-const Resume = require("../models/Resume");
-const upload = require("../middlewares/uploadMiddleware");
+import fs from "fs";
+import path from "path";
+import Resume from "../models/Resume.js";
+import upload from "../middlewares/uploadMiddleware.js";
 
 const uploadResumeImages = async (req, res) => {
     try {
@@ -57,4 +57,4 @@ const uploadResumeImages = async (req, res) => {
             }
             };
             
-            module.exports = { uploadResumeImages };
+            export { uploadResumeImages };
