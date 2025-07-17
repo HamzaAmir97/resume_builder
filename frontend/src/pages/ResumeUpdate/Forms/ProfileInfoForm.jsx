@@ -1,6 +1,6 @@
 import React from 'react'
 import Input from '../../../components/Inputs/Input';
-import ProfilePhotoSelector from '../../../components/inputs/ProfilePhotoSelector';
+import ProfilePhotoSelector from '../../../components/Inputs/ProfilePhotoSelector';
 
 const ProfileInfoForm = ({ profileData, updateSection}) => {
     return (
