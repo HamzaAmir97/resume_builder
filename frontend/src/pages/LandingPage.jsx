@@ -113,7 +113,7 @@ const LandingPage = () => {
 
       </div>
 
-      <div className="text-sm bg-gray-50 text-secondary text-center p-5 mt-10">
+      <div className="text-sm bg-gray-50 text-secondary text-center p-8 mt-10">
         Made with <span className='size-10 animate-bounce'>❤️</span>... By Hamzah Amir
       </div>
 
