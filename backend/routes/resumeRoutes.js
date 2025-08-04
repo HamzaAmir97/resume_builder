@@ -6,9 +6,9 @@ import {
     getResumeById,
     updateResume,
     deleteResume,
-} from  ("../controllers/resumeController");
-import { protect } from("../middlewares/authMiddleware");
-import { uploadResumeImages } from("../controllers/uploadImages");
+} from  "../controllers/resumeController";
+import { protect } from"../middlewares/authMiddleware";
+import { uploadResumeImages } from"../controllers/uploadImages";
 
 const router = express.Router();
 
