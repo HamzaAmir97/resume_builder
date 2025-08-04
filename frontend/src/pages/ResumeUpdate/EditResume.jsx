@@ -616,7 +616,7 @@ const handleDeleteResume = async () => {
 
 
     <DashboardLayout>
-      <div className="container mx-auto md:p-8 p-7">
+      <div className="container mx-auto md:p-8 ">
         <div className="flex items-center justify-between gap-5 bg-white rounded-lg border border-purple-100 py-3 px-4 mb-4 ">
           <TitleInput
             title={resumeData.title}
