@@ -1,6 +1,6 @@
 
 
-export const BASE_URL = import.meta.env.MODE === "development"
+export const BASE_URL = import.meta.env.NODE_ENV === "development"
   ? "http://localhost:8000"
   : import.meta.env.VITE_BASE_URL;
 
