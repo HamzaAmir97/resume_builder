@@ -5,7 +5,7 @@ import Resume from "../models/Resume.js";
 // @desc    Create a new resume
 // @route   POST /api/resumes
 // @access  Private
-const createResume = async (req, res) => {
+export const createResume = async (req, res) => {
     try {
         const { title } = req.body;
 
@@ -98,7 +98,7 @@ const createResume = async (req, res) => {
 // @desc    Get all resumes for logged-in user
 // @route   GET /api/resumes
 // @access  Private
-const getUserResumes = async (req, res) => {
+export const getUserResumes = async (req, res) => {
     try {
 
         const resumes = await Resume.find({ userId: req.user._id }).sort({
@@ -121,7 +121,7 @@ const getUserResumes = async (req, res) => {
 
 // @route   GET /api/resumes/:id
 // @access  Private
-const getResumeById = async (req, res) => {
+export const getResumeById = async (req, res) => {
     try{
         const resume = await Resume.findOne({ _id: req.params.id, userId: req.user._id });
 
@@ -143,7 +143,7 @@ const getResumeById = async (req, res) => {
 // @desc    Update a resume
 // @route   PUT /api/resumes/:id
 // @access  Private
-const updateResume = async (req, res) => {
+export const updateResume = async (req, res) => {
     try {
         const resume = await Resume.findOne({
             _id: req.params.id,
@@ -173,7 +173,7 @@ const updateResume = async (req, res) => {
 // @desc    Delete a resume
 // @route   DELETE /api/resumes/:id
 // @access  Private
-const deleteResume = async (req, res) => {
+export const deleteResume = async (req, res) => {
     try {
         const resume = await Resume.findOne({
             _id: req.params.id,
@@ -219,10 +219,3 @@ const deleteResume = async (req, res) => {
     }
 };
 
-export default {
-    createResume,
-    getUserResumes,
-    getResumeById,
-    updateResume,
-    deleteResume,
-};

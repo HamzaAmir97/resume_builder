@@ -2,7 +2,7 @@
 import Resume from "../models/Resume.js";
 import upload from "../middlewares/uploadMiddleware.js";
 
-const uploadResumeImages = async (req, res) => {
+export const uploadResumeImages = async (req, res) => {
   try {
     upload.fields([{ name: 'thumbnail' }, { name: 'profileImage' }])(req, res, async (err) => {
       if (err) {
@@ -41,7 +41,6 @@ const uploadResumeImages = async (req, res) => {
   }
 };
 
-export default { uploadResumeImages };
 
 
 

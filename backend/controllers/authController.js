@@ -3,14 +3,14 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 // Generate JWT Token
-const generateToken = (userId) => {
+export const generateToken = (userId) => {
     return jwt.sign({ id: userId }, process.env.JWT_SECRET, { expiresIn: "7d" });
 };
 
 // @desc    Register a new user
 // @route   POST /api/auth/register
 // @access  Public
-const registerUser = async (req, res) => {
+export const registerUser = async (req, res) => {
     try {
         const { name, email, password, profileImageUrl } =
             req.body;
@@ -56,7 +56,7 @@ const registerUser = async (req, res) => {
 // @desc    Login user
 // @route   POST /api/auth/login
 // @access  Public
-const loginUser = async (req, res) => {
+export const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
 
@@ -90,7 +90,7 @@ const loginUser = async (req, res) => {
 // @desc    Get user profile
 // @route   GET /api/auth/profile
 // @access  Private (Requires JWT)
-const getUserProfile = async (req, res) => {
+export const getUserProfile = async (req, res) => {
     try {
         const user = await User.findById(req.user.id).select("-password");
         if (!user) {
@@ -102,4 +102,3 @@ const getUserProfile = async (req, res) => {
     }
 };
 
-export default { registerUser, loginUser, getUserProfile };
