@@ -1,6 +1,6 @@
 //cloudinary storage
-import Resume from "../models/Resume";
-import upload from "../middlewares/uploadMiddleware";
+import Resume from "../models/Resume.js";
+import upload from "../middlewares/uploadMiddleware.js";
 
 const uploadResumeImages = async (req, res) => {
   try {
@@ -50,8 +50,8 @@ export default { uploadResumeImages };
 
 // const fs = require("fs");
 // const path = require("path");
-// const Resume = require("../models/Resume");
-// const upload = require("../middlewares/uploadMiddleware");
+// const Resume = require("../models/Resume.js");
+// const upload = require("../middlewares/uploadMiddleware.js");
 
 // const uploadResumeImages = async (req, res) => {
 //     try {
