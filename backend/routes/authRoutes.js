@@ -10,15 +10,38 @@ router.post("/register", registerUser);   // Register User
 router.post("/login", loginUser);       // Login User
 router.get("/profile", protect, getUserProfile); // Get User Profile
 
-
-router.post("/upload-image", upload.single("image"), (req, res) => {
-    if (!req.file) {
-        return res.status(400).json({ message: "No file uploaded" });
+//cloudinary storage
+router.post("/upload-image", async (req, res) => {
+    try {
+      upload.single("image")(req, res, function (err) {
+        if (err) {
+          return res.status(400).json({ message: "Upload failed", error: err.message });
+        }
+  
+        if (!req.file) {
+          return res.status(400).json({ message: "No file uploaded" });
+        }
+  
+        const imageUrl = req.file.path;
+        return res.status(200).json({ imageUrl });
+      });
+    } catch (error) {
+      console.error("Unexpected Error:", error);
+      res.status(500).json({ message: "Unexpected server error", error: error.message });
     }
-    const imageUrl = `${req.protocol}://${req.get("host")}/uploads/${
-        req.file.filename
-    }`;
-    res.status(200).json({ imageUrl });
-});
+  });
+  
+
+
+//local storage
+// router.post("/upload-image", upload.single("image"), (req, res) => {
+//     if (!req.file) {
+//         return res.status(400).json({ message: "No file uploaded" });
+//     }
+//     const imageUrl = `${req.protocol}://${req.get("host")}/uploads/${
+//         req.file.filename
+//     }`;
+//     res.status(200).json({ imageUrl });
+// });
 
 module.exports = router;
