@@ -6,7 +6,7 @@ import ProfilePhotoSelector from '../../components/Inputs/ProfilePhotoSelector';
 import { API_PATHS } from '../../utils/apiPaths';
 import axiosInstance from '../../utils/axiosInstance';
 import { UserContext } from '../../context/userContext';
-import uploadImage from '../../utils/uploadImage';
+import { uploadImage } from '../../utils/uploadImage';
 
 
 const SignUp = ({ setCurrentPage }) => {
@@ -70,7 +70,7 @@ const SignUp = ({ setCurrentPage }) => {
       if (token) {
         localStorage.setItem("token", token);
         updateUser(response.data);
-        navigate("/dashb");
+        navigate("/dashboard");
       }
     } catch (error) {
       if (error.response && error.response.data.message) {
