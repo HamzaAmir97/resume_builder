@@ -1,13 +1,14 @@
-const express = require("express");
-const {
+import express from "express";
+
+import {
     createResume,
     getUserResumes,
     getResumeById,
     updateResume,
     deleteResume,
-} = require("../controllers/resumeController");
-const { protect } = require("../middlewares/authMiddleware");
-const { uploadResumeImages } = require("../controllers/uploadImages");
+} from  ("../controllers/resumeController");
+import { protect } from("../middlewares/authMiddleware");
+import { uploadResumeImages } from("../controllers/uploadImages");
 
 const router = express.Router();
 
@@ -18,4 +19,4 @@ router.put("/:id", protect, updateResume);      // Update Resume
 router.put("/:id/upload-images", protect, uploadResumeImages);
 router.delete("/:id", protect, deleteResume);   // Delete Resume
 
-module.exports = router;
+export default router;

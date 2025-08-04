@@ -1,6 +1,6 @@
-const fs = require("node:fs");
-const path = require("node:path");
-const Resume = require("../models/Resume");
+import fs from "node:fs";
+import path from "node:path";
+import Resume from "../models/Resume";
 
 // @desc    Create a new resume
 // @route   POST /api/resumes
@@ -219,7 +219,7 @@ const deleteResume = async (req, res) => {
     }
 };
 
-module.exports = {
+export default {
     createResume,
     getUserResumes,
     getResumeById,
