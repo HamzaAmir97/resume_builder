@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&duration=3000&pause=500&color=61DAFB&center=true&vCenter=true&width=435&lines=🚀+Welcome+to+Resume+Builder!;Build+your+professional+resume+in+minutes." alt="Typing SVG" />
+  Resume Builder
 </h1>
 
 <p align="center">
@@ -36,29 +36,23 @@ If you find this project useful or inspiring, consider giving it a **star** — 
 
 ---
 
-
-## 📸 Screenshots
-
 ### 🔐 Landing Page
-![Landing Page](screenshots/resume (1).png)
+![Landing Page](screenshots/resume%20(1).png)
 
 ### 🏠 Dashboard
-![Dashboard](screenshots/resume (2).png)
+![Dashboard](screenshots/resume%20(2).png)
 
 ### 📝 Resume Builder
-![Resume Form](screenshots/resume (3).png)
+![Resume Form](screenshots/resume%20(3).png)
 
 ### 🎨 Template Selection
-![Template Selection](screenshots/resume (5).png)
+![Template Selection](screenshots/resume%20(5).png)
 
 ### 📄 Theme Selection
-![Theme Selection](screenshots/resume (6).png)
+![Theme Selection](screenshots/resume%20(6).png)
 
 ### 📄 Resume Preview
-![Resume Preview](screenshots/resume (7).png)
-
-
----
+![Resume Preview](screenshots/resume%20(7).png)
 
 ## 🗂️ Project Structure
 
